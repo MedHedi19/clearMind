@@ -1,5 +1,7 @@
 package esprit.javafxesprit.controllers;
 
+import esprit.javafxesprit.models.Data;
+import esprit.javafxesprit.models.DataBase;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

@@ -5,6 +5,7 @@
  */
 package esprit.javafxesprit.controllers;
 
+import esprit.javafxesprit.models.*;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

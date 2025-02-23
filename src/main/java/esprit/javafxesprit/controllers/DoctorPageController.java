@@ -1,5 +1,7 @@
 package esprit.javafxesprit.controllers;
 
+import esprit.javafxesprit.models.Data;
+import esprit.javafxesprit.models.DataBase;
 import esprit.javafxesprit.models.Users;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

@@ -1,5 +1,6 @@
 package esprit.javafxesprit.controllers;
 
+import esprit.javafxesprit.models.DoctorData;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;

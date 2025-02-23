@@ -1,5 +1,8 @@
 package esprit.javafxesprit.controllers;
 
+import esprit.javafxesprit.models.Data;
+import esprit.javafxesprit.models.DataBase;
+import esprit.javafxesprit.models.PatientsData;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

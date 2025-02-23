@@ -1,7 +1,8 @@
 package esprit.javafxesprit.controllers;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+import esprit.javafxesprit.models.AppointmentData;
+import esprit.javafxesprit.models.Data;
+import esprit.javafxesprit.models.DataBase;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,7 +23,6 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.File;
 import java.net.URL;

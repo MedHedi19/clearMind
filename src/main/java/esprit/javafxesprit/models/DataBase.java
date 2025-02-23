@@ -1,4 +1,4 @@
-package esprit.javafxesprit.controllers;
+package esprit.javafxesprit.models;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

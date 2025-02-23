@@ -1,4 +1,4 @@
-package esprit.javafxesprit.controllers;
+package esprit.javafxesprit.models;
 
 public class Data {
 
