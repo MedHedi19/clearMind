@@ -91,7 +91,8 @@ public class FXMLDocumentController implements Initializable {
 
     public void loginAccount() {
 
-        if (login_username.getText().isEmpty() || login_password.getText().isEmpty()) {
+        if (login_username.getText().isEmpty()
+                || login_password.getText().isEmpty()) {
             alert.errorMessage("Incorrect Username/Password");
         } else {
 
@@ -100,11 +101,15 @@ public class FXMLDocumentController implements Initializable {
             connect = DataBase.connectDB();
 
             try {
-                // Ensure password visibility is handled correctly
+
                 if (!login_showPassword.isVisible()) {
-                    login_showPassword.setText(login_password.getText());
+                    if (!login_showPassword.getText().equals(login_password.getText())) {
+                        login_showPassword.setText(login_password.getText());
+                    }
                 } else {
-                    login_password.setText(login_showPassword.getText());
+                    if (!login_showPassword.getText().equals(login_password.getText())) {
+                        login_password.setText(login_showPassword.getText());
+                    }
                 }
 
                 prepare = connect.prepareStatement(sql);
@@ -113,27 +118,34 @@ public class FXMLDocumentController implements Initializable {
                 result = prepare.executeQuery();
 
                 if (result.next()) {
+                    // TO GET THE USERNAME
+                    Data.admin_username = login_username.getText();
+                    Data.admin_id = Integer.parseInt(result.getString("admin_id"));
+
+                    // IF CORRECT USERNAME AND PASSWORD
                     alert.successMessage("Login Successfully!");
 
-                    // Load AdminMainForm.fxml
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/esprit/javafxesprit/AdminMainForm.fxml"));
-                    Parent root = loader.load();
+                    // LINK MAIN FORM FOR ADMIN
+                    Parent root = FXMLLoader.load(getClass().getResource("/esprit/javafxesprit/AdminMainForm.fxml"));
                     Stage stage = new Stage();
+
+                    stage.setTitle("Hospital Management System | Admin Portal");
                     stage.setScene(new Scene(root));
-                    stage.setTitle("Admin Dashboard");
                     stage.show();
 
-                    // Close current login window
-                    Stage currentStage = (Stage) login_loginBtn.getScene().getWindow();
-                    currentStage.close();
+                    // TO HIDE YOUR ADMIN PAGE (LOGIN FORM)
+                    login_loginBtn.getScene().getWindow().hide();
                 } else {
+                    // IF WRONG USERNAME OR PASSWORD
                     alert.errorMessage("Incorrect Username/Password");
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
         }
+
     }
 
     public void loginShowPassword() {
@@ -287,7 +299,7 @@ public class FXMLDocumentController implements Initializable {
 
             try {
 
-                Parent root = FXMLLoader.load(getClass().getResource("/esprit/javafxesprit/PatientMainForm.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/esprit/javafxesprit/PatientPage.fxml"));
                 Stage stage = new Stage();
 
                 stage.setTitle("Hospital Management System");

@@ -18,7 +18,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -88,6 +87,72 @@ public class DoctorPageController  implements Initializable {
     @FXML
     void loginAccount() {
 
+        if (login_doctorID.getText().isEmpty()
+                || login_password.getText().isEmpty()) {
+            alert.errorMessage("Incorrect Doctor ID/Password");
+        } else {
+
+            String sql = "SELECT * FROM doctor WHERE doctor_id = ? AND password = ? AND delete_date IS NULL";
+            connect = DataBase.connectDB();
+
+            try {
+
+                if (!login_showPassword.isVisible()) {
+                    if (!login_showPassword.getText().equals(login_password.getText())) {
+                        login_showPassword.setText(login_password.getText());
+                    }
+                } else {
+                    if (!login_showPassword.getText().equals(login_password.getText())) {
+                        login_password.setText(login_showPassword.getText());
+                    }
+                }
+
+                // CHECK IF THE STATUS OF THE DOCTOR IS CONFIRM
+                String checkStatus = "SELECT status FROM doctor WHERE doctor_id = '"
+                        + login_doctorID.getText() + "' AND password = '"
+                        + login_password.getText() + "' AND status = 'Confirm'";
+
+                prepare = connect.prepareStatement(checkStatus);
+                result = prepare.executeQuery();
+
+                if (result.next()) {
+
+                    alert.errorMessage("Need the confimation of the Admin!");
+                } else {
+                    prepare = connect.prepareStatement(sql);
+                    prepare.setString(1, login_doctorID.getText());
+                    prepare.setString(2, login_password.getText());
+
+                    result = prepare.executeQuery();
+
+                    if (result.next()) {
+
+                        Data.doctor_id = result.getString("doctor_id");
+                        Data.doctor_name = result.getString("full_name");
+
+                        alert.successMessage("Login Successfully!");
+
+                        // LINK YOUR DOCTOR MAIN FORM
+                        Parent root = FXMLLoader.load(getClass().getResource("/esprit/javafxesprit/DoctorMainForm.fxml"));
+                        Stage stage = new Stage();
+
+                        stage.setTitle("Hospital Management System | Doctor Main Form");
+                        stage.setScene(new Scene(root));
+                        stage.show();
+
+                        // TO HIDE YOUR DOCTOR PAGE
+                        login_loginBtn.getScene().getWindow().hide();
+
+                    } else {
+                        alert.errorMessage("Incorrect Doctor ID/Password");
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
 
     }
 
@@ -217,7 +282,7 @@ public class DoctorPageController  implements Initializable {
 
             try {
 
-                Parent root = FXMLLoader.load(getClass().getResource("/esprit/javafxesprit/PatientMainForm.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/esprit/javafxesprit/PatientPage.fxml"));
                 Stage stage = new Stage();
 
                 stage.setTitle("Hospital Management System");

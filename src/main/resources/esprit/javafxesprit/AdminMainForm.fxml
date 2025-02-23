@@ -29,9 +29,9 @@
                     <top>
                         <AnchorPane prefHeight="40.0" prefWidth="1100.0" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" BorderPane.alignment="CENTER">
                             <children>
-                                <AnchorPane layoutX="-58.0" layoutY="-86.0" prefHeight="40.0" prefWidth="214.0" styleClass="bg-color-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane layoutX="-58.0" layoutY="-86.0" prefHeight="40.0" prefWidth="214.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <ImageView fitHeight="45.0" fitWidth="247.0" layoutX="51.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="48.0" fitWidth="230.0" layoutX="48.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@assets/logo.png" />
                                  </image>
@@ -53,7 +53,7 @@
                                         <Font size="15.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="logout_btn" layoutX="879.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Logout" AnchorPane.rightAnchor="142.0" AnchorPane.topAnchor="10.0" />
+                                <Button fx:id="logout_btn" layoutX="879.0" layoutY="10.0" mnemonicParsing="false" onAction="#logoutBtn" prefHeight="25.0" prefWidth="79.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Logout" AnchorPane.rightAnchor="142.0" AnchorPane.topAnchor="10.0" />
                             </children>
                             <styleClass>
                                 <String fx:value="white-bg" />
@@ -78,28 +78,28 @@
                                 </Label>
                                 <Line endX="88.0" layoutX="113.0" layoutY="152.0" startX="-100.0" stroke="WHITE" />
                                 <Label layoutX="13.0" layoutY="162.0" text="Feature" textFill="WHITE" />
-                                <Button fx:id="dashboard_btn" layoutX="7.0" layoutY="187.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Dashboard">
+                                <Button fx:id="dashboard_btn" layoutX="7.0" layoutY="187.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Dashboard">
                                     <graphic>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="doctors_btn" layoutX="7.0" layoutY="237.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Doctors">
+                                <Button fx:id="doctors_btn" layoutX="7.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Doctors">
                                     <graphic>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="patients_btn" layoutX="7.0" layoutY="285.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Patients">
-                                    <graphic>
-                                   </graphic>
-                                </Button>
-                                <Button fx:id="appointments_btn" layoutX="7.0" layoutY="335.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Appointments">
+                                <Button fx:id="patients_btn" layoutX="7.0" layoutY="285.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Patients">
                                     <graphic>
                                     </graphic>
                                 </Button>
-                                <Button fx:id="payment_btn" layoutX="7.0" layoutY="387.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Payment">
+                                <Button fx:id="appointments_btn" layoutX="7.0" layoutY="335.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Appointments">
+                                    <graphic>
+                                    </graphic>
+                                </Button>
+                                <Button fx:id="payment_btn" layoutX="7.0" layoutY="387.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Payment">
                                     <graphic>
                                     </graphic>
                                 </Button>
                                 <Label layoutX="13.0" layoutY="435.0" text="Profile" textFill="WHITE" />
-                                <Button fx:id="profile_btn" layoutX="7.0" layoutY="460.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Profile Setting">
+                                <Button fx:id="profile_btn" layoutX="7.0" layoutY="460.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Profile Setting">
                                     <graphic>
                                     </graphic>
                                 </Button>
@@ -387,7 +387,7 @@
                                                         <Font size="20.0" />
                                                     </font>
                                                 </Label>
-                                                <TableView fx:id="payment_tableView" layoutX="14.0" layoutY="61.0" prefHeight="458.0" prefWidth="522.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="61.0">
+                                                <TableView fx:id="payment_tableView" layoutX="14.0" layoutY="61.0" onMouseClicked="#paymentSelectItems" prefHeight="458.0" prefWidth="522.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="61.0">
                                                     <columns>
                                                         <TableColumn fx:id="payment_col_patientID" prefWidth="75.0" text="Patient ID" />
                                                         <TableColumn fx:id="payment_col_name" prefWidth="75.0" text="Name" />
@@ -414,7 +414,7 @@
                                                 <Label layoutX="66.0" layoutY="223.0" text="Patient ID:" />
                                                 <Label layoutX="74.0" layoutY="282.0" text="Doctor:" />
                                                 <Label layoutX="90.0" layoutY="313.0" text="Date:" />
-                                                <Button fx:id="payment_checkoutBtn" layoutX="81.0" layoutY="482.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="126.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Check-Out" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="482.0" />
+                                                <Button fx:id="payment_checkoutBtn" layoutX="81.0" layoutY="482.0" mnemonicParsing="false" onAction="#paymentCheckOutBtn" prefHeight="37.0" prefWidth="126.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Check-Out" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="81.0" AnchorPane.topAnchor="482.0" />
                                                 <Label fx:id="payment_patientID" layoutX="123.0" layoutY="223.0" prefHeight="17.0" prefWidth="151.0" />
                                                 <Label fx:id="payment_name" layoutX="123.0" layoutY="250.0" prefHeight="17.0" prefWidth="151.0" />
                                                 <Label fx:id="payment_doctor" layoutX="123.0" layoutY="282.0" prefHeight="17.0" prefWidth="151.0" />
@@ -433,7 +433,7 @@
                                             </styleClass>
                                             <children>
                                                 <Circle fx:id="profile_circle" fill="#3c434a" layoutX="137.0" layoutY="95.0" radius="81.0" stroke="BLACK" strokeType="INSIDE" />
-                                                <Button fx:id="profile_importBtn" layoutX="62.0" layoutY="184.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Import" />
+                                                <Button fx:id="profile_importBtn" layoutX="62.0" layoutY="184.0" mnemonicParsing="false" onAction="#profileInsertImage" prefHeight="30.0" prefWidth="150.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Import" />
                                                 <Label layoutX="62.0" layoutY="254.0" text="Admin ID:">
                                                     <font>
                                                         <Font size="13.0" />
@@ -512,7 +512,7 @@
                                                     </font>
                                                 </Label>
                                                 <ComboBox fx:id="profile_status" layoutX="189.0" layoutY="210.0" prefWidth="150.0" promptText="Choose..." styleClass="textfield-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" AnchorPane.leftAnchor="189.0" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="210.0" />
-                                                <Button fx:id="profile_updateBtn" layoutX="215.0" layoutY="292.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="156.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Update" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="292.0" />
+                                                <Button fx:id="profile_updateBtn" layoutX="215.0" layoutY="292.0" mnemonicParsing="false" onAction="#profileUpdateBtn" prefHeight="40.0" prefWidth="156.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Update" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="194.0" AnchorPane.topAnchor="292.0" />
                                             </children>
                                         </AnchorPane>
                                     </children></AnchorPane>
