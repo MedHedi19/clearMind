@@ -15,7 +15,7 @@ public class Data {
 
     public static String[] status = {"Active", "Inactive", "Confirm"};
 
-    public static String[] specialization = {"Allergist", "Dermatologist", "Ophthalmologist", "Gynecologist", "Cardiologist"};
+    public static String[] specialization = {"Psychothérapeute", "Nutritionniste", "Enseignant"};
 
     public static Integer temp_PatientID;
     public static String temp_name;
