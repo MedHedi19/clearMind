@@ -92,7 +92,42 @@ public class ADHDForm {
     private VBox createAdultForm() {
         VBox form = new VBox(10);
         form.getChildren().add(new Label("Adult ADHD Form"));
-        form.getChildren().add(createRadioButtonQuestion("Avez-vous du mal à vous concentrer au travail ?", "Oui", "Non"));
+
+        // Section 1: Grossesse et Naissance
+        pregnancyBox = new VBox(10);
+        pregnancyBox.getChildren().add(new Label("1) Grossesse et Naissance"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("La grossesse a-t-elle été compliquée (problèmes de santé, hospitalisation) ?", "Oui", "Non"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("Votre enfant est-il né prématurément ou avec un faible poids ?", "Oui", "Non"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("A-t-il eu des complications médicales à la naissance ?", "Oui", "Non"));
+        form.getChildren().add(pregnancyBox);
+
+        // Section 2: Développement Précoce (0-3 ans)
+        VBox developmentBox = new VBox(10);
+        developmentBox.getChildren().add(new Label("2) Développement Précoce (0-3 ans)"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("A-t-il eu un retard dans l’apprentissage de la marche ou du langage ?", "Oui", "Non"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("Était-il souvent agité ou difficile à calmer bébé ?", "Oui", "Non"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("A-t-il eu des troubles du sommeil fréquents ?", "Oui", "Non"));
+        form.getChildren().add(developmentBox);
+
+        // Section 3: Environnement Familial
+        VBox familyBox = new VBox(10);
+        familyBox.getChildren().add(new Label("3) Environnement Familial"));
+        familyBox.getChildren().add(createRadioButtonQuestion("Y a-t-il eu des tensions familiales importantes ou des événements stressants (séparation, déménagement) ?", "Oui", "Non"));
+        familyBox.getChildren().add(createRadioButtonQuestion("Un membre proche de la famille a-t-il déjà présenté des signes de TDAH ou d’hyperactivité ?", "Oui", "Non"));
+        familyBox.getChildren().add(createRadioButtonQuestion("Votre enfant passe-t-il plus de 2 heures par jour devant un écran ?", "Oui", "Non"));
+        form.getChildren().add(familyBox);
+
+        // Section 4: Comportement Actuel de l’Enfant
+        behaviorBox = new VBox(10);
+        behaviorBox.getChildren().add(new Label("4) Comportement Actuel de l’Enfant"));
+        behaviorBox.getChildren().add(createRadioButtonQuestion("A-t-il du mal à rester concentré sur une tâche ?", "Oui", "Non"));
+        behaviorBox.getChildren().add(createRadioButtonQuestion("Perd-il souvent ses affaires ou oublie-t-il des consignes ?", "Oui", "Non"));
+        behaviorBox.getChildren().add(createRadioButtonQuestion("A-t-il des difficultés à attendre son tour ou interrompt-il souvent les autres ?", "Oui", "Non"));
+        behaviorBox.getChildren().add(createRadioButtonQuestion("Est-il impulsif et agit-il souvent sans réfléchir ?", "Oui", "Non"));
+        behaviorBox.getChildren().add(createRadioButtonQuestion("A-t-il des difficultés à gérer ses émotions (colères, frustration) ?", "Oui", "Non"));
+        behaviorBox.getChildren().add(createRadioButtonQuestion("Présente-t-il des problèmes relationnels avec d’autres enfants ?", "Oui", "Non"));
+        form.getChildren().add(behaviorBox);
+
         form.getChildren().add(createSubmitButton("adult"));
         return form;
     }
@@ -129,13 +164,13 @@ public class ADHDForm {
         boolean prematureBirth = getSelectedValue(pregnancyBox, 1);
         boolean birthComplications = getSelectedValue(pregnancyBox, 2);
         boolean concentrationIssue = getSelectedValue(behaviorBox, 0);
-//        if(obj.equals("adult")){
+        if(obj.equals("adult")){
+            saveFormDataAdult(Data.patient_id,category, pregnancyComplicated, prematureBirth, birthComplications,
+                    false, false, false, false, false, false, concentrationIssue, false, false, false, false);
+        }else{
             saveFormDataParent(Data.patient_id,category, pregnancyComplicated, prematureBirth, birthComplications,
                     false, false, false, false, false, false, concentrationIssue, false, false, false, false);
-//        }else{
-//            saveFormDataAdult(category, pregnancyComplicated, prematureBirth, birthComplications,
-//                    false, false, false, false, false, false, concentrationIssue, false, false, false, false);
-//        }
+        }
     }
 
     private boolean getSelectedValue(VBox box, int index) {
@@ -159,7 +194,7 @@ public class ADHDForm {
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setInt(1, userId);
-            stmt.setString(2, category);
+            stmt.setString(2, "Parent");
             stmt.setBoolean(3, pregnancyComplicated);
             stmt.setBoolean(4, prematureBirth);
             stmt.setBoolean(5, birthComplications);
@@ -205,39 +240,40 @@ public class ADHDForm {
 
 
 
-    private void saveFormDataAdult(String category, boolean pregnancyComplicated, boolean prematureBirth, boolean birthComplications,
-                                    boolean learningDelay, boolean hyperactive, boolean sleepIssues, boolean familyTensions,
-                                    boolean familyADHD, boolean screenTime, boolean concentrationIssue, boolean losesItems,
-                                    boolean impatience, boolean impulsive, boolean emotionalIssues) {
+    private void saveFormDataAdult(int userId, String category, boolean pregnancyComplicated, boolean prematureBirth, boolean birthComplications,
+                                   boolean learningDelay, boolean hyperactive, boolean sleepIssues, boolean familyTensions,
+                                   boolean familyADHD, boolean screenTime, boolean concentrationIssue, boolean losesItems,
+                                   boolean impatience, boolean impulsive, boolean emotionalIssues) {
 
-        String query = "INSERT INTO adhd_responses (category, pregnancy_complicated, premature_birth, birth_complications, " +
+        String query = "INSERT INTO adhd_responses (user_id, category, pregnancy_complicated, premature_birth, birth_complications, " +
                 "learning_delay, hyperactive, sleep_issues, family_tensions, family_adhd, screen_time, concentration_issue, " +
-                "loses_items, impatience, impulsive, emotional_issues) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "loses_items, impatience, impulsive, emotional_issues) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DataBase.connectDB();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setString(1, category);
-            stmt.setBoolean(2, pregnancyComplicated);
-            stmt.setBoolean(3, prematureBirth);
-            stmt.setBoolean(4, birthComplications);
-            stmt.setBoolean(5, learningDelay);
-            stmt.setBoolean(6, hyperactive);
-            stmt.setBoolean(7, sleepIssues);
-            stmt.setBoolean(8, familyTensions);
-            stmt.setBoolean(9, familyADHD);
-            stmt.setBoolean(10, screenTime);
-            stmt.setBoolean(11, concentrationIssue);
-            stmt.setBoolean(12, losesItems);
-            stmt.setBoolean(13, impatience);
-            stmt.setBoolean(14, impulsive);
-            stmt.setBoolean(15, emotionalIssues);
+            stmt.setInt(1, userId);
+            stmt.setString(2, "Adult");
+            stmt.setBoolean(3, pregnancyComplicated);
+            stmt.setBoolean(4, prematureBirth);
+            stmt.setBoolean(5, birthComplications);
+            stmt.setBoolean(6, learningDelay);
+            stmt.setBoolean(7, hyperactive);
+            stmt.setBoolean(8, sleepIssues);
+            stmt.setBoolean(9, familyTensions);
+            stmt.setBoolean(10, familyADHD);
+            stmt.setBoolean(11, screenTime);
+            stmt.setBoolean(12, concentrationIssue);
+            stmt.setBoolean(13, losesItems);
+            stmt.setBoolean(14, impatience);
+            stmt.setBoolean(15, impulsive);
+            stmt.setBoolean(16, emotionalIssues);
 
             stmt.executeUpdate();
             System.out.println("Form data saved successfully.");
 
-            // Show alert confirmation
             showAlert("Success", "Data saved successfully!");
+            redirectToNextScreen();
 
         } catch (SQLException e) {
             e.printStackTrace();
