@@ -160,27 +160,63 @@ public class ADHDForm {
     }
     private void handleSubmit(String obj) {
         String category = categoryBox.getSelectionModel().getSelectedItem();
-        boolean pregnancyComplicated = getSelectedValue(pregnancyBox, 0);
-        boolean prematureBirth = getSelectedValue(pregnancyBox, 1);
-        boolean birthComplications = getSelectedValue(pregnancyBox, 2);
-        boolean concentrationIssue = getSelectedValue(behaviorBox, 0);
-        if(obj.equals("adult")){
-            saveFormDataAdult(Data.patient_id,category, pregnancyComplicated, prematureBirth, birthComplications,
-                    false, false, false, false, false, false, concentrationIssue, false, false, false, false);
-        }else{
-            saveFormDataParent(Data.patient_id,category, pregnancyComplicated, prematureBirth, birthComplications,
-                    false, false, false, false, false, false, concentrationIssue, false, false, false, false);
+
+        VBox activeForm = category.equals("Parent pour enfant (-16 ans)") ? parentForm : adultForm;
+
+        boolean pregnancyComplicated = getSelectedValue(activeForm, "La grossesse a-t-elle été compliquée");
+        boolean prematureBirth = getSelectedValue(activeForm, "Votre enfant est-il né prématurément");
+        boolean birthComplications = getSelectedValue(activeForm, "A-t-il eu des complications médicales");
+
+        boolean learningDelay = getSelectedValue(activeForm, "A-t-il eu un retard dans l’apprentissage");
+        boolean hyperactive = getSelectedValue(activeForm, "Était-il souvent agité");
+        boolean sleepIssues = getSelectedValue(activeForm, "A-t-il eu des troubles du sommeil");
+
+        boolean familyTensions = getSelectedValue(activeForm, "Y a-t-il eu des tensions familiales");
+        boolean familyADHD = getSelectedValue(activeForm, "Un membre proche de la famille a-t-il déjà présenté");
+        boolean screenTime = getSelectedValue(activeForm, "Votre enfant passe-t-il plus de 2 heures par jour");
+
+        boolean concentrationIssue = getSelectedValue(activeForm, "A-t-il du mal à rester concentré");
+        boolean losesItems = getSelectedValue(activeForm, "Perd-il souvent ses affaires");
+        boolean impatience = getSelectedValue(activeForm, "A-t-il des difficultés à attendre");
+        boolean impulsive = getSelectedValue(activeForm, "Est-il impulsif et agit-il souvent");
+        boolean emotionalIssues = getSelectedValue(activeForm, "A-t-il des difficultés à gérer ses émotions");
+
+        if (obj.equals("adult")) {
+            saveFormDataAdult(Data.patient_id, category, pregnancyComplicated, prematureBirth, birthComplications,
+                    learningDelay, hyperactive, sleepIssues, familyTensions, familyADHD, screenTime,
+                    concentrationIssue, losesItems, impatience, impulsive, emotionalIssues);
+        } else {
+            saveFormDataParent(Data.patient_id, category, pregnancyComplicated, prematureBirth, birthComplications,
+                    learningDelay, hyperactive, sleepIssues, familyTensions, familyADHD, screenTime,
+                    concentrationIssue, losesItems, impatience, impulsive, emotionalIssues);
         }
     }
 
-    private boolean getSelectedValue(VBox box, int index) {
-        HBox hBox = (HBox) box.getChildren().get(index + 1);
-        ToggleGroup group = ((RadioButton) hBox.getChildren().get(1)).getToggleGroup();
-        if (group.getSelectedToggle() != null) {
-            return ((RadioButton) group.getSelectedToggle()).getText().equals("Oui");
+
+    private boolean getSelectedValue(VBox form, String questionText) {
+        for (javafx.scene.Node node : form.getChildren()) {
+            if (node instanceof VBox) { // Section container
+                VBox section = (VBox) node;
+                for (javafx.scene.Node innerNode : section.getChildren()) {
+                    if (innerNode instanceof HBox) { // Question row
+                        HBox hBox = (HBox) innerNode;
+                        if (hBox.getChildren().get(0) instanceof Label) {
+                            Label questionLabel = (Label) hBox.getChildren().get(0);
+                            if (questionLabel.getText().startsWith(questionText)) {
+                                ToggleGroup group = ((RadioButton) hBox.getChildren().get(1)).getToggleGroup();
+                                if (group.getSelectedToggle() != null) {
+                                    return ((RadioButton) group.getSelectedToggle()).getText().equals("Oui");
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-        return false;
+        return false; // Default to false if not found
     }
+
+
     private void saveFormDataParent(int userId, String category, boolean pregnancyComplicated, boolean prematureBirth, boolean birthComplications,
                                     boolean learningDelay, boolean hyperactive, boolean sleepIssues, boolean familyTensions,
                                     boolean familyADHD, boolean screenTime, boolean concentrationIssue, boolean losesItems,
@@ -234,7 +270,6 @@ public class ADHDForm {
 
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Error", "Failed to load the result screen.");
         }
     }
 
