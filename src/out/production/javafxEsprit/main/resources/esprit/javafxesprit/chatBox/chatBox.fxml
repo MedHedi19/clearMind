@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx/8.0.171"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="esprit.javafxesprit.controllers.chatMessages.ChatController">
+
+    <!-- Chat Area (Displays messages) -->
+    <TextArea fx:id="chatArea" editable="false" wrapText="true" prefHeight="300"/>
+
+    <!-- Message Input Field -->
+    <HBox spacing="10">
+        <TextField fx:id="messageField" promptText="Type a message..." HBox.hgrow="ALWAYS"/>
+        <Button text="Send" onAction="#sendMessage"/>
+    </HBox>
+
+</VBox>

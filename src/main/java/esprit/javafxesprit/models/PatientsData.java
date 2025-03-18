@@ -30,7 +30,9 @@ public class PatientsData {
     private Date dateModify;
     private Date dateDelete;
     private String status;
-    
+    private String 	status_pay;
+    private String 	price;
+
     public PatientsData(Integer id, Integer patientID, String password, String fullName, Long mobileNumber
             , String gender, String address, String image, String description, String diagnosis, String treatment
             , String doctor, String specialized, Date date, Date dateModify
@@ -83,7 +85,7 @@ public class PatientsData {
         this.image = image;
         this.date = date;
     }
-    
+
     public PatientsData(Integer id, Integer patientID, String description
             , String diagnosis, String treatment, Date date){
         this.id = id;
@@ -93,7 +95,25 @@ public class PatientsData {
         this.treatment = treatment;
         this.date = date;
     }
-    
+
+    public PatientsData(Integer id, Integer patientID, String fullName
+            ,   String image, String description, String treatment
+            , String doctor, String specialized, Date date, String status_pay,String gender,String price){
+        this.id = id;
+        this.patientID = patientID;
+        this.fullName = fullName;
+        this.image = image;
+        this.description = description;
+        this.treatment = treatment;
+        this.doctor = doctor;
+        this.specialized = specialized;
+        this.date = date;
+        this.status_pay = status_pay;
+        this.gender = 	gender;
+        this.price = 	price;
+    }
+
+
     public Integer getId(){
         return id;
     }
@@ -138,5 +158,11 @@ public class PatientsData {
     }
     public String getStatus(){
         return status;
+    }
+    public String getStatusPay(){
+        return status_pay;
+    }
+    public String getPrice(){
+        return price;
     }
 }
