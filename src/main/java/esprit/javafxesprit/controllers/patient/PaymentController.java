@@ -38,7 +38,7 @@ public class PaymentController {
 
     private void fetchPatientPrice() {
         connect = DataBase.connectDB();
-        String query = "SELECT price FROM patient WHERE patient_id = ?";
+        String query = "SELECT price, status_pay FROM patient WHERE patient_id = ?";
 
         try {
             prepare = connect.prepareStatement(query);
@@ -46,9 +46,24 @@ public class PaymentController {
             result = prepare.executeQuery();
 
             if (result.next()) {
-                totalPriceLabel.setText("Total Price: " + result.getString("price"));
+                String statusPay = result.getString("status_pay");
+                String price = result.getString("price");
+
+                if ("Paid".equalsIgnoreCase(statusPay)) {
+                    totalPriceLabel.setText("You have already completed your payment.");
+                    payButton.setDisable(true); // Disable the button
+                } else if (price == null || price.trim().isEmpty()) {
+                    totalPriceLabel.setText("Your invoice is currently being processed by Clear Mind's team. Please check back later for the final amount.");
+                    payButton.setDisable(true); // Disable the button
+                } else {
+                    // Clean the price string by removing any "dt" or non-numeric parts
+                    String cleanPrice = price.replaceAll("[^0-9.]", ""); // Keep only numbers and dots
+                    totalPriceLabel.setText("Total Price: " + cleanPrice + " dt");
+                    payButton.setDisable(false); // Enable the button
+                }
             } else {
-                totalPriceLabel.setText("Total Price: Not Found");
+                totalPriceLabel.setText("Patient record not found.");
+                payButton.setDisable(true);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,37 +71,61 @@ public class PaymentController {
     }
 
     public void paymentButton() {
-        String displayedPrice = totalPriceLabel.getText().replace("Total Price: ", "").trim();
-
-        // Remove non-numeric characters (assuming "dt" is always at the end)
-        if (displayedPrice.endsWith("dt")) {
-            displayedPrice = displayedPrice.substring(0, displayedPrice.length() - 3).trim();
-        }
-
+        String displayedPrice = totalPriceLabel.getText().replace("Total Price: ", "").replace("dt", "").trim();
 
         try {
-            // Convertir la chaîne en double
             double amount = Double.parseDouble(displayedPrice);
+            String paymentUrl = StripePaymentService.createCheckoutSession(amount, this);
 
-            // Créer une session de paiement Stripe
-            String paymentUrl = StripePaymentService.createCheckoutSession(amount);
-
-            // Ouvrir l'URL de paiement dans un WebView
             WebView webView = new WebView();
             webView.getEngine().load(paymentUrl);
 
-            // Afficher le WebView dans une nouvelle fenêtre
             Stage stage = new Stage();
             stage.setScene(new Scene(webView, 800, 600));
             stage.setTitle("Paiement Stripe");
+
+            // Add listener for when the payment window closes
+            stage.setOnHidden(event -> {
+                // Here you should verify payment success with Stripe
+                // For this example, we'll assume success when window closes
+                // In production, use Stripe webhooks or API verification
+                updatePaymentStatus();
+            });
+
             stage.show();
         } catch (NumberFormatException e) {
-            alert.errorMessage("Erreur de saisie"); 
+            alert.errorMessage("Erreur de saisie");
             System.out.println(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             alert.errorMessage("Erreur de paiement");
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void updatePaymentStatus() {
+        connect = DataBase.connectDB();
+        String query = "UPDATE patient SET status_pay = 'Paid' WHERE patient_id = ?";
+
+        try {
+            prepare = connect.prepareStatement(query);
+            prepare.setString(1, Integer.toString(Data.patient_id));
+            int rowsAffected = prepare.executeUpdate();
+
+            if (rowsAffected > 0) {
+                alert.successMessage("Payment status updated successfully");
+                fetchPatientPrice(); // Refresh the UI
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            alert.errorMessage("Failed to update payment status");
+        } finally {
+            try {
+                if (prepare != null) prepare.close();
+                if (connect != null) connect.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

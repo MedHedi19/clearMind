@@ -130,17 +130,19 @@ public class EditDoctorFormController implements Initializable {
     public void updateBtn() {
         connect = DataBase.connectDB();
 
-        if (editDoctor_doctorID.getText().isEmpty()
-                || editDoctor_fullName.getText().isEmpty()
-                || editDoctor_email.getText().isEmpty()
-                || editDoctor_password.getText().isEmpty()
+        if (editDoctor_doctorID.getText() == null || editDoctor_doctorID.getText().isEmpty()
+                || editDoctor_fullName.getText() == null || editDoctor_fullName.getText().isEmpty()
+                || editDoctor_email.getText() == null || editDoctor_email.getText().isEmpty()
+                || editDoctor_password.getText() == null || editDoctor_password.getText().isEmpty()
                 || editDoctor_specialized.getSelectionModel().getSelectedItem() == null
                 || editDoctor_gender.getSelectionModel().getSelectedItem() == null
-                || editDoctor_mobileNumber.getText().isEmpty()
-                || editDoctor_address.getText().isEmpty()
+                || editDoctor_mobileNumber.getText() == null || editDoctor_mobileNumber.getText().isEmpty()
+                || editDoctor_address.getText() == null || editDoctor_address.getText().isEmpty()
                 || editDoctor_status.getSelectionModel().getSelectedItem() == null) {
             alert.errorMessage("Please fill all blank fields");
-        } else {
+            return;  // Stop execution if validation fails
+        }
+        else {
             Date date = new Date();
             java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 

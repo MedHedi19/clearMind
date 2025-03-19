@@ -31,11 +31,11 @@
                      <children>
                         <AnchorPane layoutX="-58.0" layoutY="-86.0" prefHeight="40.0" prefWidth="214.0" styleClass="bg-color-2" stylesheets="/esprit/javafxesprit/styles/PatientMainFormDesign.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label layoutX="21.0" layoutY="11.0" text="Hospital Management System" textFill="WHITE">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
+                              <ImageView fitHeight="43.0" fitWidth="102.0" layoutX="56.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/logo.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </AnchorPane>
                         <Circle fx:id="top_profile" fill="DODGERBLUE" layoutX="1012.0" layoutY="22.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.rightAnchor="75.0" />

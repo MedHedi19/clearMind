@@ -24,6 +24,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +49,9 @@ public class DoctorMainFormController implements Initializable {
 
     @FXML
     private Circle top_profile;
+
+    @FXML
+    private TableColumn<Object, Void> dashboad_col_sendMessage;
 
     @FXML
     private Label top_username;
@@ -78,9 +82,6 @@ public class DoctorMainFormController implements Initializable {
 
     @FXML
     private Button profile_btn;
-
-    @FXML
-    private Button messages_btn;
 
     @FXML
     private AnchorPane dashboard_form;
@@ -1108,7 +1109,7 @@ public class DoctorMainFormController implements Initializable {
 
     }
 
-    private String[] specialization = {"Allergist", "Dermatologist", "Ophthalmologist", "Gynecologist", "Cardiologist"};
+    private String[] specialization = {"Doctor", "Coach", "Psychologist", "Nutritionist","Enseignant"};
 
     public void profileSpecializedList() {
 
@@ -1233,6 +1234,28 @@ public class DoctorMainFormController implements Initializable {
             }
         }.start();
     }
+    public void sendMessage() {
+        try {
+            // Open Sender Chat Window
+            FXMLLoader senderLoader = new FXMLLoader(getClass().getResource("/esprit/javafxesprit/chatBox/chatBox.fxml"));
+            Parent senderRoot = senderLoader.load();
+            Stage senderStage = new Stage();
+            senderStage.setTitle("Client");
+            senderStage.setScene(new Scene(senderRoot, 330, 550));
+            senderStage.show();
+
+            // Open Receiver Chat Window
+            FXMLLoader receiverLoader = new FXMLLoader(getClass().getResource("/esprit/javafxesprit/chatBox/chatBox.fxml"));
+            Parent receiverRoot = receiverLoader.load();
+            Stage receiverStage = new Stage();
+            receiverStage.setTitle("Clear Mind's team");
+            receiverStage.setScene(new Scene(receiverRoot, 330, 550));
+            receiverStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -1263,7 +1286,28 @@ public class DoctorMainFormController implements Initializable {
         profileSpecializedList();
         profileStatusList();
         profileDisplayImages(); // TO DISPLAY THE PROFILE PICTURE OF THE DOCTOR
+        dashboad_col_sendMessage.setCellFactory(new Callback<>() {
+            @Override
+            public TableCell<Object, Void> call(final TableColumn<Object, Void> param) {
+                return new TableCell<>() {
+                    private final Button btn = new Button("Send Message");
 
+                    {
+                        btn.setOnAction(event -> sendMessage()); // Calls sendMessage() when clicked
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        });
+    }
     }
 
-}

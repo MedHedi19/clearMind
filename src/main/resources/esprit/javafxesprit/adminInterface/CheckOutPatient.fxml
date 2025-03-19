@@ -94,7 +94,7 @@
                         <Font size="14.0" />
                     </font>
                 </Label>
-                <Button fx:id="checkout_payBtn" layoutX="200.0" layoutY="316.0" mnemonicParsing="false" onAction="#payBtn" prefHeight="40.0" prefWidth="174.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Pay" />
+                <Button fx:id="checkout_payBtn" layoutX="200.0" layoutY="316.0" mnemonicParsing="false" onAction="#payBtn" prefHeight="40.0" prefWidth="174.0" styleClass="btn-1" stylesheets="/esprit/javafxesprit/styles/PageDesign.css" text="Set Price" />
             </children>
         </AnchorPane>
     </children>
