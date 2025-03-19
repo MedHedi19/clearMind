@@ -11,11 +11,11 @@ public class Data {
 
     public static Integer patient_id;
 
-    public static String[] gender = {"Male", "Female", "Others"};
+    public static String[] gender = {"Male", "Female"};
 
-    public static String[] status = {"Active", "Inactive", "Confirm"};
+    public static String[] status = {"Active", "Confirm"};
 
-    public static String[] specialization = {"Allergist", "Dermatologist", "Ophthalmologist", "Gynecologist", "Cardiologist"};
+    public static String[] specialization = {"Doctor", "Coach", "Psychologist", "Nutritionist","Enseignant"};
 
     public static Integer temp_PatientID;
     public static String temp_name;

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="esprit.javafxesprit.games.GamesController"
+      spacing="20" alignment="CENTER"
+      style="-fx-background-color: #282c34; -fx-padding: 40;">
+
+    <Text text="Select a Game"
+          style="-fx-font-size: 24px; -fx-fill: #61dafb;"/>
+
+    <Button text="Snake" fx:id="snake_btn" onAction="#handleSnake"
+            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10px 50px;"/>
+
+    <Button text="Tetris" fx:id="tetris_btn" onAction="#handleTetris"
+            style="-fx-background-color: #FF5722; -fx-text-fill: white; -fx-font-size: 18px; -fx-padding: 10px 50px;"/>
+</VBox>
