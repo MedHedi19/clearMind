@@ -93,24 +93,32 @@ public class ADHDForm {
         VBox form = new VBox(10);
         form.getChildren().add(new Label("Adult ADHD Form"));
 
-        // Section 1: Grossesse et Naissance
+        // Section 1: Questions sur la vie actuelle
         pregnancyBox = new VBox(10);
-        pregnancyBox.getChildren().add(new Label("1) Grossesse et Naissance"));
-        pregnancyBox.getChildren().add(createRadioButtonQuestion("La grossesse a-t-elle été compliquée (problèmes de santé, hospitalisation) ?", "Oui", "Non"));
-        pregnancyBox.getChildren().add(createRadioButtonQuestion("Votre enfant est-il né prématurément ou avec un faible poids ?", "Oui", "Non"));
-        pregnancyBox.getChildren().add(createRadioButtonQuestion("A-t-il eu des complications médicales à la naissance ?", "Oui", "Non"));
+        pregnancyBox.getChildren().add(new Label("1) Questions sur la vie actuelle"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("Avez-vous souvent du mal à vous concentrer sur une tâche, même lorsqu’elle vous intéresse ?", "Oui", "Non"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("Remettez-vous fréquemment des tâches importantes à plus tard, même si vous savez qu’elles doivent être faites rapidement ?\n", "Oui", "Non"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("Perdez-vous souvent des objets importants comme vos clés, votre téléphone ou vos documents ?", "Oui", "Non"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("Avez-vous du mal à organiser votre temps et à gérer vos priorités ?", "Oui", "Non"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("Vous arrive-t-il fréquemment d’oublier des rendez-vous ou des engagements, même en les notant quelque part ?", "Oui", "Non"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("Vous sentez-vous souvent agité(e) ou incapable de rester assis(e) tranquillement pendant une longue période ?", "Oui", "Non"));
+        pregnancyBox.getChildren().add(createRadioButtonQuestion("Avez-vous tendance à parler de façon excessive ou à dire des choses sans réfléchir ?", "Oui", "Non"));
         form.getChildren().add(pregnancyBox);
 
-        // Section 2: Développement Précoce (0-3 ans)
+        // Section 2: Questions sur l’enfance
         VBox developmentBox = new VBox(10);
-        developmentBox.getChildren().add(new Label("2) Développement Précoce (0-3 ans)"));
-        developmentBox.getChildren().add(createRadioButtonQuestion("A-t-il eu un retard dans l’apprentissage de la marche ou du langage ?", "Oui", "Non"));
-        developmentBox.getChildren().add(createRadioButtonQuestion("Était-il souvent agité ou difficile à calmer bébé ?", "Oui", "Non"));
-        developmentBox.getChildren().add(createRadioButtonQuestion("A-t-il eu des troubles du sommeil fréquents ?", "Oui", "Non"));
+        developmentBox.getChildren().add(new Label("2) Questions sur l’enfance"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("Enfant, aviez-vous du mal à rester assis(e) en classe sans bouger ou à attendre votre tour pour parler ?", "Oui", "Non"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("Aviez-vous tendance à rêvasser souvent ou à être facilement distrait(e) en classe ?", "Oui", "Non"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("Avez-vous souvent entendu des enseignants ou des adultes dire que vous étiez dans la lune ou que vous ne faisiez pas attention ?", "Oui", "Non"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("Aviez-vous des difficultés à finir vos devoirs ou vos projets scolaires parce que vous vous sentiez submergé(e) ou distrait(e) ?", "Oui", "Non"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("Vous arrivait-il de perdre fréquemment vos affaires d’école (cahiers, stylos, vêtements) ?", "Oui", "Non"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("Étiez-vous perçu(e) comme impulsif(ve) ou turbulent(e) par vos professeurs ou votre entourage ?", "Oui", "Non"));
+        developmentBox.getChildren().add(createRadioButtonQuestion("Vous êtes-vous souvent senti(e) en décalage avec les autres enfants à cause de votre manière de penser ou d’agir ?", "Oui", "Non"));
         form.getChildren().add(developmentBox);
 
         // Section 3: Environnement Familial
-        VBox familyBox = new VBox(10);
+       /* VBox familyBox = new VBox(10);
         familyBox.getChildren().add(new Label("3) Environnement Familial"));
         familyBox.getChildren().add(createRadioButtonQuestion("Y a-t-il eu des tensions familiales importantes ou des événements stressants (séparation, déménagement) ?", "Oui", "Non"));
         familyBox.getChildren().add(createRadioButtonQuestion("Un membre proche de la famille a-t-il déjà présenté des signes de TDAH ou d’hyperactivité ?", "Oui", "Non"));
@@ -126,7 +134,7 @@ public class ADHDForm {
         behaviorBox.getChildren().add(createRadioButtonQuestion("Est-il impulsif et agit-il souvent sans réfléchir ?", "Oui", "Non"));
         behaviorBox.getChildren().add(createRadioButtonQuestion("A-t-il des difficultés à gérer ses émotions (colères, frustration) ?", "Oui", "Non"));
         behaviorBox.getChildren().add(createRadioButtonQuestion("Présente-t-il des problèmes relationnels avec d’autres enfants ?", "Oui", "Non"));
-        form.getChildren().add(behaviorBox);
+        form.getChildren().add(behaviorBox);*/
 
         form.getChildren().add(createSubmitButton("adult"));
         return form;
