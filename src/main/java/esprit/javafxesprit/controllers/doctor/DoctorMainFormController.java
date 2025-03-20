@@ -539,8 +539,8 @@ public class DoctorMainFormController implements Initializable {
                 } else {
                     String insertData = "INSERT INTO patient (patient_id, password, full_name, mobile_number, "
                             + "address, doctor, specialized, date, "
-                            + "status) "
-                            + "VALUES(?,?,?,?,?,?,?,?,?)";
+                            + "status,first_time) "
+                            + "VALUES(?,?,?,?,?,?,?,?,?,?)";
                     Date date = new Date();
                     java.sql.Date sqlDate = new java.sql.Date(date.getTime());
                     prepare = connect.prepareStatement(insertData);
@@ -553,6 +553,7 @@ public class DoctorMainFormController implements Initializable {
                     prepare.setString(7, doctorSpecialized);
                     prepare.setString(8, "" + sqlDate);
                     prepare.setString(9, "Confirm");
+                    prepare.setString(10, "Yes");
 
                     prepare.executeUpdate();
 

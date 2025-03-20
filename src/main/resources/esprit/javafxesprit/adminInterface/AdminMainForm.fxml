@@ -133,7 +133,7 @@
                                                                                 <Font size="14.0" />
                                                                             </font>
                                                                         </Label>
-                                                                        <Label alignment="CENTER" layoutX="75.0" layoutY="77.0" prefHeight="17.0" prefWidth="134.0" text="Active Doctor" textFill="WHITE">
+                                                                        <Label alignment="CENTER" layoutX="75.0" layoutY="77.0" prefHeight="17.0" prefWidth="134.0" text="Active Staff" textFill="WHITE">
                                                                             <font>
                                                                                 <Font size="14.0" />
                                                                             </font>
