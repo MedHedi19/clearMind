@@ -1,5 +1,6 @@
 package esprit.javafxesprit.controllers.patient;
 
+import esprit.javafxesprit.adhdform.ADHDForm;
 import esprit.javafxesprit.utils.AlertMessage;
 import esprit.javafxesprit.models.Data;
 import esprit.javafxesprit.models.DataBase;
@@ -20,6 +21,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -77,79 +79,100 @@ private AlertMessage alert = new AlertMessage();
 
 @FXML
 void loginAccount(ActionEvent event) {
-
-    if (login_patientID.getText().isEmpty()
-            || login_password.getText().isEmpty()) {
+    if (login_patientID.getText().isEmpty() || login_password.getText().isEmpty()) {
         alert.errorMessage("Incorrect Patient ID/Password");
-    } else {
+        return;
+    }
 
-        String sql = "SELECT * FROM patient WHERE patient_id = ? AND password = ? AND date_delete IS NULL";
-        connect = DataBase.connectDB();
+    String sql = "SELECT * FROM patient WHERE patient_id = ? AND password = ? AND date_delete IS NULL";
+    String checkStatus = "SELECT status FROM patient WHERE patient_id = ? AND password = ? AND status = 'Confirm'";
+    String checkFirstConnection = "SELECT first_time FROM patient WHERE patient_id = ?";
 
-        try {
+    Connection connect = DataBase.connectDB();
+    PreparedStatement prepare = null;
+    ResultSet result = null;
 
-            if (!login_showPassword.isVisible()) {
-                if (!login_showPassword.getText().equals(login_password.getText())) {
-                    login_showPassword.setText(login_password.getText());
-                }
-            } else {
-                if (!login_showPassword.getText().equals(login_password.getText())) {
-                    login_password.setText(login_showPassword.getText());
-                }
-            }
+    try {
+        // Checking if the patient status is "Confirm"
+        prepare = connect.prepareStatement(checkStatus);
+        prepare.setString(1, login_patientID.getText());
+        prepare.setString(2, login_password.getText());
+        result = prepare.executeQuery();
 
-            // CHECK IF THE STATUS OF THE DOCTOR IS CONFIRM
-            String checkStatus = "SELECT status FROM patient WHERE patient_id = '"
-                    + login_patientID.getText() + "' AND password = '"
-                    + login_password.getText() + "' AND status = 'Confirm'";
+        if (result.next()) {
+            alert.errorMessage("Need the confirmation of the Admin!");
+            return;
+        }
 
-            prepare = connect.prepareStatement(checkStatus);
+        // Checking login credentials
+        prepare = connect.prepareStatement(sql);
+        prepare.setString(1, login_patientID.getText());
+        prepare.setString(2, login_password.getText());
+        result = prepare.executeQuery();
+
+        if (result.next()) {
+            Data.patient_id = Integer.parseInt(login_patientID.getText());
+            alert.successMessage("Login Successfully!");
+
+            // Checking first-time login
+            prepare = connect.prepareStatement(checkFirstConnection);
+            prepare.setString(1, login_patientID.getText());
             result = prepare.executeQuery();
 
             if (result.next()) {
-
-                if (!login_showPassword.isVisible()) {
-                    if (!login_showPassword.getText().equals(login_password.getText())) {
-                        login_showPassword.setText(login_password.getText());
+                String status = result.getString("first_time");
+                if ("Yes".equals(status)) {
+                    Stage currentStage = (Stage) login_loginBtn.getScene().getWindow();
+                    currentStage.close();
+                    Stage stage = new Stage();
+                    ADHDForm adhdForm = new ADHDForm();
+                    Scene adhdScene = adhdForm.getScene();
+                    stage.setScene(adhdScene);
+                    stage.setTitle("ADHD Test Form");
+                    stage.show();
+Data.patient_id=Integer.parseInt(login_patientID.getText());
+                    String updateStatusSQL = "UPDATE patient SET first_time = 'NO' WHERE patient_id = ?";
+                    PreparedStatement updatePrepare = null;
+                    try {
+                        updatePrepare = connect.prepareStatement(updateStatusSQL);
+                        updatePrepare.setString(1, login_patientID.getText());
+                        updatePrepare.executeUpdate();
+                    }catch (SQLException e) {
+                        e.printStackTrace();
+                    }finally {
+                        if (updatePrepare != null) {
+                            try {
+                                updatePrepare.close();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
-                } else {
-                    if (!login_showPassword.getText().equals(login_password.getText())) {
-                        login_password.setText(login_showPassword.getText());
-                    }
-                }
-
-                alert.errorMessage("Need the confimation of the Admin!");
-            } else {
-                prepare = connect.prepareStatement(sql);
-                prepare.setString(1, login_patientID.getText());
-                prepare.setString(2, login_password.getText());
-
-                result = prepare.executeQuery();
-
-                if (result.next()) {
-                    Data.patient_id = Integer.parseInt(login_patientID.getText());
-
-                    alert.successMessage("Login Successfully!");
-                    // LINK YOUR PATIENT MAIN FORM
+                    } else {
+                    // Redirect to Patient Main Form
                     Parent root = FXMLLoader.load(getClass().getResource("/esprit/javafxesprit/PatientInterface/PatientMainForm.fxml"));
                     Stage stage = new Stage();
-
                     stage.setScene(new Scene(root));
                     stage.show();
 
-                    // TO HIDE YOUR LOGIN FORM
-                    login_loginBtn.getScene().getWindow().hide();
-                } else {
-                    alert.errorMessage("Incorrect Patient ID/Password");
+                    // Hide login form
+                    ((Stage) login_loginBtn.getScene().getWindow()).close();
                 }
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } else {
+            alert.errorMessage("Incorrect Patient ID/Password");
         }
-
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (result != null) result.close();
+            if (prepare != null) prepare.close();
+            if (connect != null) connect.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
-
 }
 
 @FXML

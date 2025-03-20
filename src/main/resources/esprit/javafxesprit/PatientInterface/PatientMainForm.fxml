@@ -76,7 +76,7 @@
                            <graphic>
                            </graphic>
                         </Button>
-                        <Button fx:id="doctors_btn" layoutX="7.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Doctors">
+                        <Button fx:id="doctors_btn" layoutX="7.0" layoutY="237.0" mnemonicParsing="false" onAction="#switchForm" prefHeight="40.0" prefWidth="200.0" styleClass="nav-btn-1" stylesheets="/esprit/javafxesprit/styles/MainFormDesign.css" text="Staff">
                            <graphic>
                            </graphic>
                         </Button>
@@ -140,7 +140,7 @@
                                     <AnchorPane layoutX="12.0" layoutY="14.0" prefHeight="498.0" prefWidth="276.0" styleClass="bg-color-2" stylesheets="/esprit/javafxesprit/styles/PatientMainFormDesign.css" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="14.0">
                                        <children>
                                           <Circle fx:id="home_doctor_circle" fill="#384046" layoutX="138.0" layoutY="82.0" radius="68.0" stroke="BLACK" strokeType="INSIDE" />
-                                          <Label layoutX="30.0" layoutY="169.0" text="About your Doctor" textFill="WHITE">
+                                          <Label layoutX="30.0" layoutY="169.0" text="About your Responsable" textFill="WHITE">
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
