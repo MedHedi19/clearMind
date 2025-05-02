@@ -1,0 +1,124 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Doctor Login{% endblock %}
+
+{% block stylesheets %}
+<style>
+    body {
+        background: url('{{ asset("images/patient-bg.jpg") }}') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .login-container {
+        max-width: 400px;
+        margin: 80px auto;
+        background: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        text-align: center;
+    }
+
+    .login-logo img {
+        width: 250px;
+        margin-bottom: 15px;
+    }
+
+    .login-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        color: #67289d;
+    }
+
+    .login-input {
+        width: 94%;
+        padding: 12px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+    }
+
+    .login-button {
+        background: linear-gradient(to bottom right, #c512c5, #67289d);
+        color: white;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .login-button:hover {
+        background-color: #245a7d;
+    }
+
+    .error-message {
+        color: red;
+        margin-bottom: 10px;
+    }
+
+    .login-options {
+        margin-top: 10px;
+        font-size: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #555;
+    }
+
+    .login-options label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .login-options a {
+        text-decoration: none;
+        color: #188ba7;
+    }
+
+    .login-options a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="login-container">
+    <div class="login-logo">
+        <img src="{{ asset('images/logo.png') }}" alt="ClearMind Logo">
+    </div>
+    <div class="login-title">Doctor Login</div>
+
+    {% if error %}
+        <div class="error-message">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" action="{{ path('app_doctor_login') }}">
+        <input type="text" name="doctor_id" class="login-input" placeholder="Doctor ID" required>
+
+        <input type="password" id="password" name="password" class="login-input" placeholder="Password" required>
+
+        <div class="login-options">
+            <label><input type="checkbox" onclick="togglePassword()"> Show Password</label>
+            <a href="#">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="login-button">Login</button>
+    </form>
+</div>
+
+<script>
+    function togglePassword() {
+        const pwdField = document.getElementById("password");
+        pwdField.type = pwdField.type === "password" ? "text" : "password";
+    }
+</script>
+{% endblock %}
